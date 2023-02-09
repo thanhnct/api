@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 using myapi.Services;
 using NETCore.Encrypt;
 using Newtonsoft.Json;
@@ -12,18 +13,18 @@ using System.Text;
 namespace myapi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class TokenController : ControllerBase
     {
         private readonly ILogger<TokenController> _logger;
-        private readonly TokenHelper _token;
-        public TokenController(ILogger<TokenController> logger, TokenHelper token)
+        private readonly TokenService _token;
+        public TokenController(ILogger<TokenController> logger, TokenService token)
         {
             _logger = logger;
             _token = token;
         }
 
-        [HttpGet]
+        [HttpGet()]
         public IActionResult Get()
         {
             return Ok(_token.GenerateToken());

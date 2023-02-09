@@ -7,12 +7,15 @@ using System.Text;
 
 namespace myapi.Services
 {
-    public class TokenHelper
+    public class TokenService
     {
         private readonly IConfiguration _configuration;
-        public TokenHelper(IConfiguration configuration)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public TokenService(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
         }
         public string GenerateToken()
         {
@@ -35,7 +38,7 @@ namespace myapi.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-        public bool CheckValidToken(IHttpContextAccessor _httpContextAccessor)
+        public bool CheckValidToken()
         {
             try
             {
