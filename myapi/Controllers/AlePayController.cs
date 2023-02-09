@@ -27,7 +27,7 @@ namespace myapi.Controllers
             return Ok();
         }
 
-        [HttpPost(Name = "RequestPayment")]
+        [HttpPost()]
         public async Task<IActionResult> Post([FromBody] AlePayRequestPaymentDto model)
         {
             if (!_token.CheckValidToken())
