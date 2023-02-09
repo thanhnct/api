@@ -1,0 +1,4 @@
+ *~
+*.vs
+/myapi/bin
+/myapi/obj
