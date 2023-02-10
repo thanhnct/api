@@ -74,15 +74,18 @@ namespace myapi.Services
                 });
 
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
-
-                using var client = new HttpClient();
-                var response = await client.PostAsync(url, data);
-                var result = await response.Content.ReadAsStringAsync();
-                return result;
+                HttpClientHandler clientHandler = new HttpClientHandler();
+                clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => cert.Verify();
+                using (var client = new HttpClient(clientHandler))
+                {
+                    var response = await client.PostAsync(url, data);
+                    var result = await response.Content.ReadAsStringAsync();
+                    return result;
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return ex.Message;
+                return ex.Message + " | " + ex.InnerException.Message;
             }
         }
 
